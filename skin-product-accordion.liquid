@@ -1,0 +1,62 @@
+<div class="skin-accordion" {{ block.shopify_attributes }}>
+  {%- content_for 'blocks' -%}
+</div>
+
+{% schema %}
+{
+  "name": "Skincare details",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "_skin-detail-row"
+    }
+  ],
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Rows read from product metafields, so each product shows its own benefits, directions and ingredients. Empty rows are hidden on the live store."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Skincare details",
+      "category": "Product",
+      "blocks": [
+        {
+          "type": "_skin-detail-row",
+          "settings": {
+            "heading": "Key benefits",
+            "source": "metafield",
+            "metafield_key": "custom.key_benefits",
+            "open_by_default": true
+          }
+        },
+        {
+          "type": "_skin-detail-row",
+          "settings": {
+            "heading": "How to use",
+            "source": "metafield",
+            "metafield_key": "custom.how_to_use"
+          }
+        },
+        {
+          "type": "_skin-detail-row",
+          "settings": {
+            "heading": "Ingredients",
+            "source": "metafield",
+            "metafield_key": "custom.ingredients"
+          }
+        },
+        {
+          "type": "_skin-detail-row",
+          "settings": {
+            "heading": "Delivery & returns",
+            "source": "text",
+            "content": "<p>Delivery options and costs are shown at checkout. Our shipping and refund policies are linked at the bottom of every page.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

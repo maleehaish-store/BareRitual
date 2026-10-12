@@ -1,0 +1,52 @@
+{%- assign product = closest.product -%}
+{%- if product.vendor != blank -%}
+  <p
+    class="skin-vendor skin-vendor--{{ block.settings.size }}{% if block.settings.link_to_brand %} skin-vendor--linked{% endif %}"
+    {{ block.shopify_attributes }}
+  >
+    {%- if block.settings.link_to_brand -%}
+      <a href="{{ product.vendor | url_for_vendor }}">{{ product.vendor | escape }}</a>
+    {%- else -%}
+      {{ product.vendor | escape }}
+    {%- endif -%}
+  </p>
+{%- elsif request.design_mode -%}
+  <p class="skin-vendor skin-editor-note" {{ block.shopify_attributes }}>
+    Brand appears here from the product's Vendor field.
+  </p>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Brand (vendor)",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows the product's Vendor field. Set it in Products > [product] > Product organisation."
+    },
+    {
+      "type": "checkbox",
+      "id": "link_to_brand",
+      "label": "Link to all products from this brand",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "size",
+      "label": "Size",
+      "options": [
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" }
+      ],
+      "default": "small"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand (vendor)",
+      "category": "Product"
+    }
+  ]
+}
+{% endschema %}
