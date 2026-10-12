@@ -1,0 +1,77 @@
+{% assign content_blocks = section.blocks | where: 'type', 'concern' %}
+<section class="skin-concern-section" id="skin-concerns"><div class="skin-container skin-section">
+ <div class="skin-section-heading"><div><p class="skin-eyebrow">{{ section.settings.eyebrow | escape }}</p><h2>{{ section.settings.heading | escape }}</h2></div><p class="skin-heading-note">{{ section.settings.description | escape }}</p></div>
+ <div class="skin-concern-grid">{% for block in content_blocks %}{% assign encoded_query = block.settings.query | url_encode %}
+ <a class="skin-concern" href="{% if block.settings.link != blank %}{{ block.settings.link }}{% else %}{{ routes.search_url }}?type=product&amp;q={{ encoded_query }}{% endif %}" {{ block.shopify_attributes }}><span class="skin-concern__number" aria-hidden="true">0{{ forloop.index }}</span><h3>{{ block.settings.title | escape }}</h3><p>{{ block.settings.description | escape }}</p><span class="skin-concern__arrow" aria-hidden="true">↗</span></a>
+ {% endfor %}</div>
+</div></section>
+
+{% for block in section.blocks %}{% if block.type == '@app' %}<div class="skin-container">{% render block %}</div>{% endif %}{% endfor %}
+{% schema %}
+{
+  "name": "Shop by concern",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What does your skin need?"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Start with your focus. Explore products and choose what fits your routine."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small heading",
+      "default": "A LITTLE MORE PERSONAL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "concern",
+      "name": "Skin concern",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Short description"
+        },
+        {
+          "type": "text",
+          "id": "query",
+          "label": "Search term"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Collection or page link"
+        }
+      ]
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "max_blocks": 12,
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  },
+  "presets": [
+    {
+      "name": "Shop by concern"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,120 @@
+{%- liquid
+  assign c = collection
+  assign hero_title = c.title | default: section.settings.fallback_title
+  assign show_image = false
+  if section.settings.show_image and c.image != blank
+    assign show_image = true
+  endif
+  assign chips = section.blocks | where: 'type', 'chip'
+-%}
+
+<section
+  class="skin-collection-hero{% if show_image %} skin-collection-hero--image{% endif %}"
+  style="--hero-pad-top: {{ section.settings.padding_top }}px; --hero-pad-bottom: {{ section.settings.padding_bottom }}px;"
+  aria-labelledby="CollectionTitle-{{ section.id }}"
+>
+  <div class="skin-container skin-collection-hero__inner">
+    <div class="skin-collection-hero__copy">
+      {%- if section.settings.show_breadcrumbs -%}
+        <nav class="skin-breadcrumbs" aria-label="Breadcrumb">
+          <ol role="list">
+            <li><a href="{{ routes.root_url }}">Home</a></li>
+            <li><a href="{{ routes.collections_url }}">Collections</a></li>
+            <li aria-current="page">{{ hero_title | escape }}</li>
+          </ol>
+        </nav>
+      {%- endif -%}
+
+      {%- if section.settings.show_count and c.products_count > 0 -%}
+        <p class="skin-eyebrow">{{ c.products_count }} {% if c.products_count == 1 %}product{% else %}products{% endif %}</p>
+      {%- elsif section.settings.eyebrow != blank -%}
+        <p class="skin-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+
+      <h1 id="CollectionTitle-{{ section.id }}" class="skin-collection-hero__title">{{ hero_title | escape }}</h1>
+
+      {%- if section.settings.show_description and c.description != blank -%}
+        <div class="skin-collection-hero__description rte">{{ c.description }}</div>
+      {%- endif -%}
+    </div>
+
+    {%- if show_image -%}
+      <div class="skin-collection-hero__media">
+        {{ c.image | image_url: width: 1200 | image_tag: loading: 'eager', widths: '400,800,1200', sizes: '(max-width: 749px) 100vw, 40vw', alt: c.image.alt | default: c.title }}
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- if chips.size > 0 -%}
+    <div class="skin-container">
+      <ul class="skin-chips" role="list" aria-label="{{ section.settings.chips_label | escape }}">
+        {%- for block in chips -%}
+          {%- if block.settings.label != blank -%}
+            {%- assign chip_url = block.settings.link | default: routes.all_products_collection_url -%}
+            <li {{ block.shopify_attributes }}>
+              <a class="skin-chip" href="{{ chip_url }}"{% if request.path == chip_url %} aria-current="page"{% endif %}>{{ block.settings.label | escape }}</a>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Collection header",
+  "tag": "div",
+  "class": "skin-collection-hero-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Title, description and image come from each collection in Products > Collections."
+    },
+    { "type": "checkbox", "id": "show_breadcrumbs", "label": "Show breadcrumbs", "default": true },
+    { "type": "checkbox", "id": "show_count", "label": "Show product count", "default": true },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small heading (used when product count is hidden)",
+      "default": "THE EDIT"
+    },
+    { "type": "checkbox", "id": "show_description", "label": "Show collection description", "default": true },
+    { "type": "checkbox", "id": "show_image", "label": "Show collection image", "default": true },
+    {
+      "type": "text",
+      "id": "fallback_title",
+      "label": "Fallback title",
+      "default": "Shop all"
+    },
+    {
+      "type": "text",
+      "id": "chips_label",
+      "label": "Quick links accessible label",
+      "default": "Shop by category"
+    },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 24 }
+  ],
+  "blocks": [
+    {
+      "type": "chip",
+      "name": "Quick link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Serums" },
+        { "type": "url", "id": "link", "label": "Link", "info": "Choose a collection, or leave blank for Shop all." }
+      ]
+    }
+  ],
+  "max_blocks": 16,
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "presets": [
+    {
+      "name": "Collection header"
+    }
+  ]
+}
+{% endschema %}

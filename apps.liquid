@@ -1,0 +1,26 @@
+<div class="skin-apps{% if section.settings.page_width %} skin-container{% endif %}">
+{% for block in section.blocks %}{% render block %}{% endfor %}
+</div>
+{% schema %}
+{
+  "name": "Apps",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "page_width",
+      "label": "Constrain to page width",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Apps"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,67 @@
+<section class="skin-container skin-section skin-brands" id="skin-brands"><div class="skin-section-heading"><div><p class="skin-eyebrow">{{ section.settings.eyebrow | escape }}</p><h2>{{ section.settings.heading | escape }}</h2></div><a class="skin-text-link" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">{{ section.settings.button_label | escape }} <span aria-hidden="true">→</span></a></div>
+ <div class="skin-brand-grid">{% for vendor in shop.vendors limit: section.settings.brand_limit %}{% capture vendor_query %}vendor:"{{ vendor }}"{% endcapture %}<a href="{{ routes.search_url }}?type=product&amp;q={{ vendor_query | url_encode }}">{{ vendor | escape }} <span aria-hidden="true">↗</span></a>{% else %}<p class="skin-empty">{{ section.settings.empty_text | escape }}</p>{% endfor %}</div>
+ {% if request.design_mode and shop.vendors.size == 0 %}<p class="skin-editor-note">Brand links appear automatically when you add products with a vendor in Shopify.</p>{% endif %}
+</section>
+
+{% for block in section.blocks %}{% if block.type == '@app' %}<div class="skin-container">{% render block %}</div>{% endif %}{% endfor %}
+{% schema %}
+{
+  "name": "Shop by brand",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Discover your next favourite"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small heading",
+      "default": "YOUR SHELF, YOUR CHOICE"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Link label",
+      "default": "Explore the edit"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link destination"
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Empty collection message",
+      "default": "Our brand edit is coming soon."
+    },
+    {
+      "type": "range",
+      "id": "brand_limit",
+      "label": "Maximum brands",
+      "min": 4,
+      "max": 50,
+      "step": 1,
+      "default": 12
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  },
+  "presets": [
+    {
+      "name": "Shop by brand"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}

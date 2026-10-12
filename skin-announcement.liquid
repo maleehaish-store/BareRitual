@@ -1,0 +1,29 @@
+<div class="skin-announcement"><p>{% if section.settings.link != blank %}<a href="{{ section.settings.link }}">{% endif %}{{ section.settings.text | escape }}{% if section.settings.link != blank %}</a>{% endif %}</p></div>
+{% schema %}
+{
+  "name": "Skincare announcement",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Announcement",
+      "default": "Skincare, thoughtfully selected. A little care, every day."
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Announcement link"
+    }
+  ],
+  "enabled_on": {
+    "groups": [
+      "header"
+    ]
+  },
+  "presets": [
+    {
+      "name": "Skincare announcement"
+    }
+  ]
+}
+{% endschema %}

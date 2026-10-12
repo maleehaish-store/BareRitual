@@ -1,0 +1,93 @@
+{% assign content_blocks = section.blocks | where: 'type', 'category' %}
+<section class="skin-section skin-container" id="skin-categories" aria-labelledby="skin-categories-title-{{ section.id }}">
+ <div class="skin-section-heading"><div><p class="skin-eyebrow">{{ section.settings.eyebrow | escape }}</p><h2 id="skin-categories-title-{{ section.id }}">{{ section.settings.heading | escape }}</h2></div><a class="skin-text-link" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">{{ section.settings.button_label | escape }} <span aria-hidden="true">→</span></a></div>
+ <div class="skin-category-grid">
+ {% for block in content_blocks %}
+ {% assign encoded_query = block.settings.query | url_encode %}
+ <a class="skin-category skin-category--{{ forloop.index }}" href="{% if block.settings.link != blank %}{{ block.settings.link }}{% else %}{{ routes.search_url }}?type=product&amp;q={{ encoded_query }}{% endif %}" {{ block.shopify_attributes }}>
+  <div class="skin-category__art">{% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy', widths: '250,500', sizes: '(max-width: 749px) 40vw, 18vw' }}{% else %}<span class="skin-category__number" aria-hidden="true">0{{ forloop.index }}</span><span class="skin-category__circle" aria-hidden="true"></span>{% endif %}</div>
+  <div class="skin-category__label"><span>{{ block.settings.title | escape }}</span><span aria-hidden="true">↗</span></div>
+  <p>{{ block.settings.description | escape }}</p>
+ </a>{% endfor %}
+ </div>
+</section>
+
+{% for block in section.blocks %}{% if block.type == '@app' %}<div class="skin-container">{% render block %}</div>{% endif %}{% endfor %}
+{% schema %}
+{
+  "name": "Shop by category",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Build your everyday routine"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small heading",
+      "default": "THE BUILDING BLOCKS"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Link label",
+      "default": "Shop all"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link destination"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Short description"
+        },
+        {
+          "type": "text",
+          "id": "query",
+          "label": "Search term"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Collection or page link"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Optional category image"
+        }
+      ]
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "max_blocks": 12,
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  },
+  "presets": [
+    {
+      "name": "Shop by category"
+    }
+  ]
+}
+{% endschema %}

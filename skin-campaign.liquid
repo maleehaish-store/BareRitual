@@ -1,0 +1,94 @@
+<section class="skin-campaign" aria-labelledby="skin-campaign-title-{{ section.id }}">
+ <div class="skin-campaign__visual">
+ {% if section.settings.image != blank %}
+  {{ section.settings.image | image_url: width: 2200 | image_tag: class: 'skin-campaign__image', loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '750,1100,1500,2200' }}
+ {% else %}
+  <img class="skin-campaign__image" src="{{ 'skin-campaign.webp' | asset_url }}" alt="Unbranded skincare bottles and a cream jar on pale stone in soft daylight" width="1774" height="887" loading="eager" fetchpriority="high">
+ {% endif %}
+ </div>
+ <div class="skin-container skin-campaign__content"><div class="skin-campaign__copy">
+ <p class="skin-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+ <h1 id="skin-campaign-title-{{ section.id }}">{{ section.settings.heading | escape | newline_to_br }}</h1>
+ <p class="skin-campaign__description">{{ section.settings.description | escape }}</p>
+ <a class="skin-button" href="{{ section.settings.link | default: routes.all_products_collection_url }}">{{ section.settings.button | escape }} <span aria-hidden="true">↗</span></a>
+ {% if section.settings.secondary_label != blank %}<a class="skin-text-link" href="{{ section.settings.secondary_link | default: routes.root_url }}">{{ section.settings.secondary_label | escape }} <span aria-hidden="true">→</span></a>{% endif %}
+ </div></div>
+ <span class="skin-campaign__caption">{{ section.settings.caption | escape }}</span>
+</section>
+
+{% for block in section.blocks %}{% if block.type == '@app' %}<div class="skin-container">{% render block %}</div>{% endif %}{% endfor %}
+{% schema %}
+{
+  "name": "Skincare campaign",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Campaign image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small heading",
+      "default": "A fresh start for your shelf"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Main heading",
+      "default": "Good skincare.\nSimply selected."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Discover everyday essentials and thoughtful additions to your routine. Less guesswork. A little more care."
+    },
+    {
+      "type": "text",
+      "id": "button",
+      "label": "Button label",
+      "default": "Explore the edit"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary link label",
+      "default": "Find your focus"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Secondary link",
+      "default": "/#skin-concerns"
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Image caption",
+      "default": "THE EVERYDAY EDIT"
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  },
+  "presets": [
+    {
+      "name": "Skincare campaign"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}

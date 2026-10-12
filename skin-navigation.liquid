@@ -1,0 +1,142 @@
+<nav class="skin-navigation" aria-label="{{ section.settings.label | escape }}">
+ <div class="skin-container skin-navigation__inner">
+ {% if section.settings.menu != blank %}
+  {% for link in section.settings.menu.links %}
+   {% render 'skin-menu-link', link: link %}
+  {% endfor %}
+ {% else %}
+  {% for block in section.blocks %}
+   {%- liquid
+     assign nav_url = block.settings.link | default: routes.root_url
+     assign nav_missing = false
+     if nav_url contains '/pages/'
+       assign nav_handle = nav_url | split: '/pages/' | last | split: '?' | first | split: '#' | first
+       if pages[nav_handle].id == blank
+         if block.settings.fallback_link != blank
+           assign nav_url = block.settings.fallback_link
+         else
+           assign nav_missing = true
+         endif
+       endif
+     endif
+   -%}
+   {%- comment -%} If a linked page doesn't exist yet, the fallback link is used; with no fallback the link is hidden to avoid 404s. {%- endcomment -%}
+   {% if nav_missing == false %}
+    <a href="{{ nav_url }}" {{ block.shopify_attributes }}>{{ block.settings.title | escape }}</a>
+   {% elsif request.design_mode %}
+    <a href="{{ nav_url }}" class="skin-nav-missing" title="This page doesn't exist yet. Create it in Online Store > Pages, or change this link. Hidden on the live store until then." {{ block.shopify_attributes }}>{{ block.settings.title | escape }}</a>
+   {% endif %}
+  {% endfor %}
+ {% endif %}
+ </div>
+</nav>
+{% schema %}
+{
+  "name": "Skincare navigation",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Accessible navigation label",
+      "default": "Main navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Shopify menu",
+      "info": "Choose a menu from Content > Menus. Its links replace the editable link blocks below. Supports nested menus."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Navigation link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Label",
+          "default": "Link"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "url",
+          "id": "fallback_link",
+          "label": "Fallback link",
+          "info": "Used if the page above hasn't been created yet, so visitors never see a 404."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "enabled_on": {
+    "groups": [
+      "header"
+    ]
+  },
+  "presets": [
+    {
+      "name": "Skincare navigation",
+      "blocks": [
+        {
+          "type": "link",
+          "settings": {
+            "title": "New in",
+            "link": "/collections/all?sort_by=created-descending"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "title": "Shop all",
+            "link": "/collections/all"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "title": "Skincare",
+            "link": "/pages/skincare",
+            "fallback_link": "/#skin-categories"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "title": "Skin concerns",
+            "link": "/pages/skin-concerns",
+            "fallback_link": "/#skin-concerns"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "title": "Brands",
+            "link": "/pages/brands",
+            "fallback_link": "/#skin-brands"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "title": "The skincare guide",
+            "link": "/pages/skincare-guide",
+            "fallback_link": "/#skin-guidance"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "title": "About us",
+            "link": "/pages/about-us"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

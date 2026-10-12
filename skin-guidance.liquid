@@ -1,0 +1,86 @@
+{% assign content_blocks = section.blocks | where: 'type', 'guide' %}
+<section class="skin-container skin-section" id="skin-guidance"><div class="skin-section-heading"><div><p class="skin-eyebrow">{{ section.settings.eyebrow | escape }}</p><h2>{{ section.settings.heading | escape }}</h2></div></div>
+ {% if section.settings.blog != blank and section.settings.blog.articles_count > 0 %}<div class="skin-guide-grid">{% for article in section.settings.blog.articles limit:3 %}<a class="skin-guide" href="{{ article.url }}">{% if article.image %}{{ article.image | image_url: width:700 | image_tag: loading:'lazy', class:'skin-guide__image' }}{% endif %}<p class="skin-eyebrow">{{ article.published_at | date: '%d %b %Y' }}</p><h3>{{ article.title | escape }}</h3><p>{{ article.excerpt_or_content | strip_html | truncate:140 }}</p><span class="skin-text-link">{{ section.settings.article_label | escape }} →</span></a>{% endfor %}</div>
+ {% else %}<div class="skin-guide-grid">{% for block in content_blocks %}<article class="skin-guide" {{ block.shopify_attributes }}><p class="skin-eyebrow">0{{ forloop.index }} / {{ block.settings.label | escape }}</p><h3>{{ block.settings.title | escape }}</h3><p>{{ block.settings.text | escape }}</p>{% if block.settings.link != blank %}<a class="skin-text-link" href="{{ block.settings.link }}">{{ section.settings.guide_label | escape }} →</a>{% endif %}</article>{% endfor %}</div>{% endif %}
+</section>
+
+{% for block in section.blocks %}{% if block.type == '@app' %}<div class="skin-container">{% render block %}</div>{% endif %}{% endfor %}
+{% schema %}
+{
+  "name": "Skincare guidance",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Keep your routine simple"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog (replaces the starter guides)"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small heading",
+      "default": "THE SKINCARE GUIDE"
+    },
+    {
+      "type": "text",
+      "id": "article_label",
+      "label": "Article link label",
+      "default": "Read the guide"
+    },
+    {
+      "type": "text",
+      "id": "guide_label",
+      "label": "Starter guide link label",
+      "default": "Explore more"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "guide",
+      "name": "Starter guide",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Optional article link"
+        }
+      ]
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "max_blocks": 12,
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  },
+  "presets": [
+    {
+      "name": "Skincare guidance"
+    }
+  ]
+}
+{% endschema %}
