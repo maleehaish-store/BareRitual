@@ -1,0 +1,15 @@
+{{ 'overflow-list.css' | asset_url | preload_tag: as: 'style' }}
+{{ 'base.css' | asset_url | stylesheet_tag: preload: true }}
+
+{{ 'skin-edit.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+:root {
+ --skin-cream: {{ settings.color_palette.background | default: '#FAF8F3' }};
+ --skin-sage: {{ settings.color_palette.color1 | default: '#E7EDE4' }};
+ --skin-light: {{ settings.color_palette.color2 | default: '#F1F4EE' }};
+ --skin-ink: {{ settings.color_palette.foreground | default: '#293A33' }};
+ --skin-muted: color-mix(in srgb, var(--skin-ink) 74%, var(--skin-cream));
+ --skin-line: color-mix(in srgb, var(--skin-ink) 18%, var(--skin-cream));
+}
+{% endstyle %}
