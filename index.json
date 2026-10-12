@@ -1,0 +1,377 @@
+{
+  "sections": {
+    "campaign": {
+      "type": "skin-campaign",
+      "settings": {}
+    },
+    "categories": {
+      "type": "skin-categories",
+      "settings": {},
+      "blocks": {
+        "category_1": {
+          "type": "category",
+          "settings": {
+            "title": "Cleansers",
+            "description": "Start fresh.",
+            "query": "cleanser"
+          }
+        },
+        "category_2": {
+          "type": "category",
+          "settings": {
+            "title": "Toners",
+            "description": "A refreshing next step.",
+            "query": "toner"
+          }
+        },
+        "category_3": {
+          "type": "category",
+          "settings": {
+            "title": "Serums",
+            "description": "Focus your routine.",
+            "query": "serum"
+          }
+        },
+        "category_4": {
+          "type": "category",
+          "settings": {
+            "title": "Moisturisers",
+            "description": "Your everyday comfort.",
+            "query": "moisturiser OR moisturizer"
+          }
+        },
+        "category_5": {
+          "type": "category",
+          "settings": {
+            "title": "SPF",
+            "description": "The daytime essential.",
+            "query": "sunscreen OR SPF"
+          }
+        }
+      },
+      "block_order": [
+        "category_1",
+        "category_2",
+        "category_3",
+        "category_4",
+        "category_5"
+      ]
+    },
+    "edit": {
+      "type": "product-list",
+      "blocks": {
+        "static-header": {
+          "type": "_product-list-content",
+          "static": true,
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_list_text_3FXyz8": {
+              "type": "_product-list-text",
+              "name": "t:names.collection_title",
+              "settings": {
+                "text": "<h2>The skincare edit</h2>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h2",
+                "font": "var(--font-heading--family)",
+                "font_size": "2rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_list_text_3FXyz8"
+          ]
+        },
+        "static-product-card": {
+          "type": "_product-card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 12,
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "card-gallery": {
+              "type": "_product-card-gallery",
+              "settings": {
+                "image_ratio": "square",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "group": {
+              "type": "_product-card-group",
+              "settings": {
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 4,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "open_in_new_tab": false,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "product_title_hgAHWC": {
+                  "type": "product-title",
+                  "name": "t:names.product_title",
+                  "settings": {
+                    "width": "fit-content",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "h5",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "price": {
+                  "type": "price",
+                  "settings": {
+                    "show_sale_price_first": true,
+                    "show_installments": false,
+                    "show_tax_info": false,
+                    "type_preset": "paragraph",
+                    "width": "100%",
+                    "alignment": "left",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "swatches": {
+                  "type": "swatches",
+                  "name": "t:names.swatches",
+                  "disabled": true,
+                  "settings": {
+                    "product_swatches_alignment": "center",
+                    "product_swatches_alignment_mobile": "flex-start",
+                    "hide_padding": false,
+                    "product_swatches_padding_top": 4,
+                    "product_swatches_padding_bottom": 0,
+                    "product_swatches_padding_left": 0,
+                    "product_swatches_padding_right": 0
+                  },
+                  "blocks": {}
+                },
+                "skin_vendor": {
+                  "type": "skin-vendor",
+                  "settings": {
+                    "link_to_brand": false,
+                    "size": "small"
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "skin_vendor",
+                "product_title_hgAHWC",
+                "price",
+                "swatches"
+              ]
+            }
+          },
+          "block_order": [
+            "card-gallery",
+            "group"
+          ],
+          "name": "t:names.product_card"
+        }
+      },
+      "name": "t:names.product_list",
+      "settings": {
+        "collection": "all",
+        "layout_type": "grid",
+        "carousel_on_mobile": false,
+        "max_products": 8,
+        "columns": 4,
+        "mobile_columns": "2",
+        "mobile_card_size": "60cqw",
+        "columns_gap": 24,
+        "rows_gap": 32,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "horizontal_alignment": "flex-start",
+        "gap": 28,
+        "background_color": "{{ settings.color_palette.background }}",
+        "padding-block-start": 24,
+        "padding-block-end": 64
+      }
+    },
+    "concerns": {
+      "type": "skin-concerns",
+      "settings": {},
+      "blocks": {
+        "concern_1": {
+          "type": "concern",
+          "settings": {
+            "title": "Hydration",
+            "description": "Explore your everyday moisture essentials.",
+            "query": "hydrating OR moisturiser OR moisturizer"
+          }
+        },
+        "concern_2": {
+          "type": "concern",
+          "settings": {
+            "title": "Uneven tone",
+            "description": "Discover products for a more even-looking complexion.",
+            "query": "brightening OR pigmentation"
+          }
+        },
+        "concern_3": {
+          "type": "concern",
+          "settings": {
+            "title": "Sensitive skin",
+            "description": "Explore products with sensitive skin in mind.",
+            "query": "sensitive"
+          }
+        },
+        "concern_4": {
+          "type": "concern",
+          "settings": {
+            "title": "Blemishes",
+            "description": "Find products for your blemish-focused routine.",
+            "query": "blemish OR acne"
+          }
+        }
+      },
+      "block_order": [
+        "concern_1",
+        "concern_2",
+        "concern_3",
+        "concern_4"
+      ]
+    },
+    "brands": {
+      "type": "skin-brands",
+      "settings": {}
+    },
+    "guidance": {
+      "type": "skin-guidance",
+      "settings": {},
+      "blocks": {
+        "guide_1": {
+          "type": "guide",
+          "settings": {
+            "label": "START SIMPLE",
+            "title": "Build around your basics",
+            "text": "Start with a cleanser, moisturiser and daytime sunscreen. Add extra steps thoughtfully, rather than all at once."
+          }
+        },
+        "guide_2": {
+          "type": "guide",
+          "settings": {
+            "label": "GET TO KNOW IT",
+            "title": "Give a new product its own moment",
+            "text": "Introduce one new product at a time. Follow its directions and give yourself time to notice how your skin responds."
+          }
+        },
+        "guide_3": {
+          "type": "guide",
+          "settings": {
+            "label": "FIND YOUR FIT",
+            "title": "A routine that belongs to you",
+            "text": "Use each product’s ingredients and directions to guide your choices. The most useful routine is one you can keep up with."
+          }
+        }
+      },
+      "block_order": [
+        "guide_1",
+        "guide_2",
+        "guide_3"
+      ]
+    }
+  },
+  "order": [
+    "campaign",
+    "categories",
+    "edit",
+    "concerns",
+    "brands",
+    "guidance"
+  ]
+}
