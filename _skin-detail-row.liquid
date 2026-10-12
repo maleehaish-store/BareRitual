@@ -1,0 +1,91 @@
+{%- liquid
+  assign product = closest.product
+  assign value = blank
+  assign row_content = ''
+  assign source_key = block.settings.metafield_key | strip
+
+  if block.settings.source == 'metafield' and source_key contains '.'
+    assign key_parts = source_key | split: '.'
+    assign mf_namespace = key_parts | first
+    assign mf_key = key_parts | last
+    assign value = product.metafields[mf_namespace][mf_key]
+  endif
+
+  if value != blank
+    if value.type == 'rich_text_field' or value.type contains 'list.'
+      assign row_content = value | metafield_tag
+    else
+      assign row_content = value.value | escape | newline_to_br | prepend: '<p>' | append: '</p>'
+    endif
+  elsif block.settings.source == 'text' or block.settings.fallback_to_text
+    assign row_content = block.settings.content
+  endif
+-%}
+
+{%- if row_content != blank -%}
+  <details class="skin-accordion__row" {% if block.settings.open_by_default %}open{% endif %} {{ block.shopify_attributes }}>
+    <summary class="skin-accordion__summary">
+      <span>{{ block.settings.heading | escape }}</span>
+      <span class="skin-accordion__icon" aria-hidden="true"></span>
+    </summary>
+    <div class="skin-accordion__content rte">{{ row_content }}</div>
+  </details>
+{%- elsif request.design_mode -%}
+  <div class="skin-accordion__row skin-accordion__row--empty" {{ block.shopify_attributes }}>
+    <p class="skin-editor-note">
+      <strong>{{ block.settings.heading | escape }}</strong> is hidden on this product: the metafield
+      <code>{{ source_key }}</code> is empty. Add it in Products > [product] > Metafields, or switch this row to custom text.
+    </p>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Detail row",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Ingredients"
+    },
+    {
+      "type": "select",
+      "id": "source",
+      "label": "Content source",
+      "options": [
+        { "value": "metafield", "label": "Product metafield (different per product)" },
+        { "value": "text", "label": "Custom text (same on every product)" }
+      ],
+      "default": "metafield"
+    },
+    {
+      "type": "text",
+      "id": "metafield_key",
+      "label": "Metafield (namespace.key)",
+      "info": "Create it in Settings > Custom data > Products, e.g. custom.ingredients. Text, multi-line text, rich text and list types are supported.",
+      "default": "custom.ingredients",
+      "visible_if": "{{ block.settings.source == 'metafield' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "fallback_to_text",
+      "label": "Show custom text when the metafield is empty",
+      "default": false,
+      "visible_if": "{{ block.settings.source == 'metafield' }}"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Custom text"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_by_default",
+      "label": "Open by default",
+      "default": false
+    }
+  ]
+}
+{% endschema %}
